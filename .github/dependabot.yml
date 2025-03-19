@@ -1,0 +1,45 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 20
+    allow:
+      - dependency-name: "@zendesk/*"
+      - dependency-name: "@zendeskgarden/*"
+    groups:
+      zendesk:
+        applies-to: version-updates
+        patterns:
+          - "@zendesk/*"
+      garden:
+        applies-to: version-updates
+        patterns:
+          - "@zendeskgarden/*"
+      non-zendesk:
+        applies-to: version-updates
+        patterns:
+          - '*'
+        exclude-patterns:
+          - '@zendesk*'
+      security-bumps:
+        applies-to: security-updates
+        patterns:
+          - '*'
+        exclude-patterns:
+          - '@zendesk/*'
+        dependency-type: production
+    versioning-strategy: widen
+    target-branch: "main"
+
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
